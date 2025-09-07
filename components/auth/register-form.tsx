@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { signUp, validatePassword, validateUsername } from "@/lib/auth"
+import { toast } from "sonner"
 import Link from "next/link"
 import { Eye, EyeOff, User, Lock, Mail, Calendar } from "lucide-react"
 
@@ -79,6 +80,7 @@ export default function RegisterForm() {
     }
 
     if (user) {
+      toast.success("Cadastro realizado com sucesso!")
       router.push("/dashboard")
     }
 

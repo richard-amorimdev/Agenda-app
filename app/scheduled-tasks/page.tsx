@@ -158,7 +158,7 @@ export default function ScheduledTasksPage() {
       <Header
         userName={user.name}
         userRole={user.role}
-        consultants={consultants}
+        consultants={consultants} 
         selectedConsultant={null} // Não usado nesta página para filtro global
         onConsultantChange={() => {}}
         currentUser={user}

@@ -123,7 +123,7 @@ export async function signIn(username: string, password: string): Promise<AuthRe
     }
 
     localStorage.setItem("user_session", JSON.stringify(sessionUser))
-    console.log("Login realizado com sucesso:", sessionUser)
+    console.log("Login efetuado com sucesso!!", sessionUser)
 
     return { user: sessionUser }
   } catch (error) {
@@ -203,7 +203,7 @@ export async function signUp(userData: {
       role: newUser.role,
     }
 
-    console.log("Usuário criado com sucesso:", sessionUser)
+    console.log("Registro efetuado com sucesso!!", sessionUser)
     return { user: sessionUser }
   } catch (error) {
     console.error("Erro no cadastro:", error)

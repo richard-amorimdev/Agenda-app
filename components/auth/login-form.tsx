@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
 import { signIn } from "@/lib/auth"
+import { toast } from "sonner"
 import Link from "next/link"
 import { User, Lock, Eye, EyeOff, Calendar } from "lucide-react"
 
@@ -39,19 +40,19 @@ export default function LoginForm() {
     setLoading(true)
     setError("")
 
-    console.log("Tentando login para:", username)
-
     const { user, error: signInError } = await signIn(username, password)
 
     if (signInError) {
-      console.log("Erro no login:", signInError)
       setError(signInError)
+      toast.error("Falha no login", {
+        description: signInError,
+      })
       setLoading(false)
       return
     }
 
     if (user) {
-      console.log("Login bem-sucedido para:", user.username)
+      toast.success("Login efetuado com sucesso!!")
 
       if (rememberLogin) {
         localStorage.setItem(
@@ -64,7 +65,7 @@ export default function LoginForm() {
       } else {
         localStorage.removeItem("loginCredentials")
       }
-
+      
       router.push("/dashboard")
     }
 

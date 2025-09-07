@@ -6,6 +6,7 @@ import { LogOut, Calendar, ListTodo } from "lucide-react"
 import { signOut } from "@/lib/auth"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
+import { toast } from "sonner"
 import type { User } from "@/lib/auth"
 import Link from "next/link"
 import { AlternadorDeTema } from "@/components/ui/theme-toggle"
@@ -52,6 +53,7 @@ export default function Cabecalho({
    */
   const realizarLogout = async () => {
     await signOut()
+    toast.success("Logout Realizado")
     router.push("/login")
   }
 
