@@ -59,11 +59,6 @@ export default function DashboardPage() {
         return
       }
 
-      if (currentUser.role !== "admin") {
-        router.push("/login")
-        return
-      }
-
       setUser(currentUser)
     } catch (error) {
       console.error("Erro ao verificar autenticação:", error)
