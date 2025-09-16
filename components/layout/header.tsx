@@ -86,7 +86,10 @@ export default function Cabecalho({
             <div className="flex items-center gap-4 cursor-pointer">
               <div className="flex items-center gap-2">
                 <Calendar className="h-6 w-6 text-blue-600" />
-                <h1 className="text-xl font-bold text-foreground">Un. Meltec</h1>
+                <div className="flex flex-col">
+                  <h1 className="text-xl font-bold text-foreground leading-tight">Un. Meltec</h1>
+                  {process.env.NEXT_PUBLIC_APP_VERSION && <span className="text-xs text-muted-foreground">v{process.env.NEXT_PUBLIC_APP_VERSION}</span>}
+                </div>
               </div>
               <Badge variant="default">Administrador</Badge>
             </div>
