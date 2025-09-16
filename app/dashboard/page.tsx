@@ -58,6 +58,7 @@ export default function DashboardPage() {
         router.push("/login")
         return
       }
+      //Bug corrigido #1
 
       setUser(currentUser)
     } catch (error) {
