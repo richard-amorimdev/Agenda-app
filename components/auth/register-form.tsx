@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { signUp, validatePassword, validateUsername } from "@/lib/auth"
 import Link from "next/link"
+import { toast } from "sonner"
 import { Eye, EyeOff, User, Lock, Mail, Calendar } from "lucide-react"
 
 export default function RegisterForm() {
@@ -79,7 +80,9 @@ export default function RegisterForm() {
     }
 
     if (user) {
-      router.push("/dashboard")
+      router.push("/login")
+      // Exibe uma notificação de sucesso após o cadastro.
+      toast.success("Usuário cadastrado com sucesso")
     }
 
     setLoading(false)

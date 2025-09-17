@@ -11,12 +11,14 @@ O Agenda App é uma aplicação web que permite aos usuários gerenciar tarefas 
 *   **Framework:** [Next.js](https://nextjs.org/)
 *   **Backend e Banco de Dados:** [Supabase](https://supabase.io/)
 *   **UI Components:** [Shadcn UI](https://ui.shadcn.com/)
+*   **Notificações:** [Sonner](https://sonner.emilkowal.ski/)
 *   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
 *   **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
 
 ## Funcionalidades
 
 *   **Autenticação de Usuários:** Sistema de login e registro de usuários.
+*   **Notificações:** Exibição de notificações para ações como login, cadastro e logout.
 *   **Visualização em Gráfico de Gantt:** Visualize as tarefas em um cronograma mensal.
 *   **Visualização Diária:** Veja as tarefas agendadas para um dia específico.
 *   **Criação de Tarefas:** Adicione novas tarefas com título, cliente, descrição e período.

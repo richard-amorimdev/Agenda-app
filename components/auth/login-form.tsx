@@ -12,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Checkbox } from "@/components/ui/checkbox"
 import { signIn } from "@/lib/auth"
 import Link from "next/link"
+import { toast } from "sonner"
 import { User, Lock, Eye, EyeOff, Calendar } from "lucide-react"
 
 export default function LoginForm() {
@@ -69,6 +70,8 @@ export default function LoginForm() {
       // Redireciona para a origem, se houver, ou para o dashboard
       const from = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("from") : null
       router.push(from || "/dashboard")
+      // Exibe uma notificação de sucesso após o login.
+      toast.success("Login efetuado com sucesso")
     }
 
     setLoading(false)

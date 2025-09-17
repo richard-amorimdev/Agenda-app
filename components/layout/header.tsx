@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import type { User } from "@/lib/auth"
 import Link from "next/link"
+import { toast } from "sonner"
 import { AlternadorDeTema } from "@/components/ui/theme-toggle"
 import type { Consultant } from  "@/components/consultant/consultant.ts"// <- Importe o tipo Consultant
  // ou o caminho correto no seu projeto
@@ -53,6 +54,8 @@ export default function Cabecalho({
   const realizarLogout = async () => {
     await signOut()
     router.push("/login")
+    // Exibe uma notificação de sucesso após o logout.
+    toast.success("Logout efetuado com sucesso")
   }
 
   // Estado de carregamento durante a hidratação
