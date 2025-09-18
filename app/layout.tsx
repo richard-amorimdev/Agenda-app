@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import Footer from "@/components/layout/footer"
 
 export const metadata: Metadata = {
   title: "Agendamento App",
@@ -12,6 +13,13 @@ export const metadata: Metadata = {
   generator: "Richard.Dev",
 }
 
+/**
+ * RootLayout é o layout principal da aplicação.
+ * Ele envolve todas as páginas e fornece um contexto de tema e notificações.
+ * @param {object} props - As propriedades do componente.
+ * @param {React.ReactNode} props.children - Os componentes filhos a serem renderizados dentro do layout.
+ * @returns {JSX.Element} O layout principal da aplicação.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,13 +36,18 @@ export default function RootLayout({
           }
         `}</style>
       </head>
-      
 
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+      <body className="flex flex-col min-h-screen">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="flex-grow">{children}</main>
           {/* Renderiza o componente Toaster para exibir notificações em toda a aplicação */}
           <Toaster />
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -17,13 +17,18 @@ O Agenda App é uma aplicação web que permite aos usuários gerenciar tarefas 
 
 ## Funcionalidades
 
-*   **Autenticação de Usuários:** Sistema de login e registro de usuários.
-*   **Notificações:** Exibição de notificações para ações como login, cadastro e logout.
-*   **Visualização em Gráfico de Gantt:** Visualize as tarefas em um cronograma mensal.
-*   **Visualização Diária:** Veja as tarefas agendadas para um dia específico.
-*   **Criação de Tarefas:** Adicione novas tarefas com título, cliente, descrição e período.
-*   **Edição e Exclusão de Tarefas:** Gerencie as tarefas existentes.
-*   **Filtragem por Consultor:** (Funcionalidade futura) Capacidade de filtrar tarefas por consultor.
+*   **Autenticação de Usuários:** Sistema completo de login e registro de usuários com gerenciamento de sessão.
+*   **Notificações em Tempo Real:** Exibição de notificações (toasts) para ações como login, cadastro, logout e outras interações do usuário.
+*   **Dashboard Intuitivo:** Uma página central para visualização e gerenciamento de tarefas.
+*   **Visualização em Gráfico de Gantt:** Permite aos usuários visualizar as tarefas em um cronograma mensal, facilitando o planejamento a longo prazo.
+*   **Visualização Diária Detalhada:** Oferece uma visão clara das tarefas agendadas para um dia específico.
+*   **Gerenciamento de Tarefas (CRUD):**
+    *   **Criação:** Adicione novas tarefas com informações detalhadas como título, cliente, descrição e período de execução.
+    *   **Leitura:** Visualize todas as tarefas nas diferentes visualizações.
+    *   **Atualização:** Edite as tarefas existentes para ajustar detalhes.
+    *   **Exclusão:** Remova tarefas que não são mais necessárias.
+*   **Tema Escuro e Claro:** Suporte para alternância entre temas claro e escuro para melhor experiência do usuário.
+*   **Design Responsivo:** A interface se adapta a diferentes tamanhos de tela, de desktops a dispositivos móveis.
 
 ## Começando
 
@@ -82,29 +87,36 @@ Abra [http://localhost:3000](http://localhost:3000) em seu navegador para ver a 
 
 ```
 .
-├── app/                # Páginas da aplicação (roteamento)
-│   ├── dashboard/
-│   ├── login/
-│   └── ...
+├── app/                # Páginas da aplicação (roteamento baseado em arquivo)
+│   ├── dashboard/      # Página principal após o login
+│   ├── login/          # Página de login
+│   ├── register/       # Página de registro
+│   ├── scheduled-tasks/# Página para visualização de tarefas agendadas
+│   ├── layout.tsx      # Layout raiz da aplicação
+│   └── page.tsx        # Página inicial (landing page)
 ├── components/         # Componentes React reutilizáveis
-│   ├── agenda/
-│   ├── auth/
-│   ├── gantt/
-│   └── ui/             # Componentes do Shadcn UI
-├── lib/                # Funções utilitárias e configuração
-│   ├── auth.ts         # Funções de autenticação
-│   └── supabase.ts     # Cliente Supabase
-├── public/             # Arquivos estáticos
-└── ...
+│   ├── agenda/         # Componentes específicos da agenda (ex: DayView)
+│   ├── auth/           # Componentes de autenticação (ex: LoginForm)
+│   ├── gantt/          # Componentes do gráfico de Gantt
+│   ├── layout/         # Componentes de layout (ex: Header)
+│   ├── tasks/          # Componentes relacionados a tarefas (ex: CreateTaskForm)
+│   └── ui/             # Componentes base da UI (Shadcn UI)
+├── lib/                # Funções utilitárias e configuração de bibliotecas
+│   ├── auth.ts         # Funções de autenticação com Supabase
+│   ├── supabase.ts     # Configuração do cliente Supabase
+│   └── utils.ts        # Funções utilitárias gerais
+├── public/             # Arquivos estáticos (imagens, fontes, etc.)
+├── scripts/            # Scripts SQL para gerenciamento do banco de dados
+└── styles/             # Estilos globais
 ```
 
 ## Scripts SQL
 
-A pasta `scripts/` contém scripts SQL para criar e popular o banco de dados:
+A pasta `scripts/` contém scripts SQL para criar e popular o banco de dados no Supabase:
 
-*   `01-create-tables.sql`: Cria as tabelas necessárias.
-*   `02-seed-data.sql`: Popula o banco de dados com dados de exemplo.
-*   ... e outros scripts para manutenção do banco de dados.
+*   `01-create-tables.sql`: Cria as tabelas necessárias para a aplicação.
+*   `02-seed-data.sql`: Popula o banco de dados com dados de exemplo para teste.
+*   ... e outros scripts para manutenção e evolução do esquema do banco de dados.
 
 ## Implantação
 
