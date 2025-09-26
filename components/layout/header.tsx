@@ -6,14 +6,10 @@ import { LogOut, Calendar, ListTodo } from "lucide-react"
 import { signOut } from "@/lib/auth"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import type { User } from "@/lib/auth"
 import Link from "next/link"
 import { toast } from "sonner"
 import { AlternadorDeTema } from "@/components/ui/theme-toggle"
-import type { Consultant } from  "@/components/consultant/consultant.ts"// <- Importe o tipo Consultant
- // ou o caminho correto no seu projeto
-
-
+import type { Consultant } from  "@/components/consultant/consultant.ts"
 
 /**
  * Componente de Cabeçalho da Aplicação
@@ -27,17 +23,15 @@ import type { Consultant } from  "@/components/consultant/consultant.ts"// <- Im
  */
 interface PropriedadesCabecalho {
   userName: string
-  userRole: "admin" | "consultor"; // já corrigindo erro 2
-  consultants: Consultant[];       // <- Adicione esta linha
+  userRole: "admin" | "consultor";
+  consultants: Consultant[];
   selectedConsultant: Consultant | null;
   onConsultantChange: () => void;
-  currentUser: any;
 }
 
 export default function Cabecalho({
   userName: nomeUsuario,
   userRole: tipoUsuario,
-  currentUser: usuarioAtual,
 }: PropriedadesCabecalho) {
   const router = useRouter()
   const [montado, setMontado] = useState(false)
@@ -94,7 +88,11 @@ export default function Cabecalho({
                   {process.env.NEXT_PUBLIC_APP_VERSION && <span className="text-xs text-muted-foreground">v{process.env.NEXT_PUBLIC_APP_VERSION}</span>}
                 </div>
               </div>
-              <Badge variant="default">Administrador</Badge>
+              {tipoUsuario && (
+                <Badge variant={tipoUsuario === "admin" ? "default" : "secondary"}>
+                  {tipoUsuario === "admin" ? "Administrador" : "Consultor"}
+                </Badge>
+              )}
             </div>
           </Link>
 

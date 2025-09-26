@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, FileText, Edit, Trash2, X } from "lucide-react"
+import { Clock, FileText, Edit, Trash2 } from "lucide-react"
 
 interface Task {
   id: string
@@ -28,10 +28,9 @@ interface DayViewProps {
   tasks: Task[]
   onEditTask: (task: Task) => void
   onDeleteTask: (taskId: string) => void
-  userRole: "admin" | "consultor"
 }
 
-export function DayView({ isOpen, onClose, selectedDate, tasks, onEditTask, onDeleteTask, userRole }: DayViewProps) {
+export function DayView({ isOpen, onClose, selectedDate, tasks, onEditTask, onDeleteTask }: DayViewProps) {
   if (!selectedDate) return null
 
   const formatTaskPeriod = (task: Task) => {

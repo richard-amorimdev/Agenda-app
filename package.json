@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "eslint .",
     "start": "next start",
     "prepare": "husky"
   },
@@ -66,11 +66,14 @@
     "zod": "3.25.67"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "cross-env": "^10.0.0",
+    "eslint": "^9.36.0",
+    "eslint-config-next": "^15.5.0",
     "husky": "^9.1.7",
     "postcss": "^8.5",
     "semver": "^7.7.2",

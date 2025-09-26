@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { getCurrentUser } from "@/lib/auth"
@@ -28,7 +28,7 @@ interface Task {
   time_slot?: "manha" | "tarde" | "integral"
 }
 
-interface Profile extends User {}
+type Profile = User;
 
 export default function DashboardPage() {
   const [user, setUser] = useState<Profile | null>(null)
@@ -41,17 +41,7 @@ export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const router = useRouter()
 
-  useEffect(() => {
-    checkAuth()
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      loadTasks()
-    }
-  }, [user, currentMonth])
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const currentUser = await getCurrentUser()
       if (!currentUser) {
@@ -67,9 +57,9 @@ export default function DashboardPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [router])
 
-  const loadTasks = async () => {
+  const loadTasks = useCallback(async () => {
     if (!user) return
 
     try {
@@ -81,7 +71,17 @@ export default function DashboardPage() {
       console.error("Erro ao carregar tarefas:", error)
       setError("Erro ao carregar tarefas")
     }
-  }
+  }, [user])
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  useEffect(() => {
+    if (user) {
+      loadTasks()
+    }
+  }, [user, currentMonth, loadTasks])
 
   const handleDeleteTask = async (taskId: string) => {
     if (!confirm("Tem certeza que deseja excluir esta tarefa?")) return

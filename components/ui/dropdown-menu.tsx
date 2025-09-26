@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 const DropdownMenu = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>
->(({ ...props }, ref) => {
+>(({ ...props }) => {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />
 })
 DropdownMenu.displayName = "DropdownMenu"
@@ -21,7 +21,7 @@ function DropdownMenuPortal({ ...props }: React.ComponentProps<typeof DropdownMe
 const DropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>
->(({ ...props }, ref) => {
+>(({ ...props }) => {
   return <DropdownMenuPrimitive.Trigger ref={ref} data-slot="dropdown-menu-trigger" {...props} />
 })
 DropdownMenuTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName

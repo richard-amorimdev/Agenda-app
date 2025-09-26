@@ -35,7 +35,7 @@ export default function SystemTest() {
 
     // Verificar conexão com Supabase
     try {
-      const { data, error } = await supabase.from("users").select("count").limit(1)
+      const { data: _data, error } = await supabase.from("users").select("count").limit(1)
       if (error) {
         if (error.message.includes('relation "public.users" does not exist')) {
           addResult({
@@ -97,7 +97,7 @@ export default function SystemTest() {
 
     // Primeiro verificar se as tabelas existem
     try {
-      const { data, error } = await supabase.from("users").select("count").limit(1)
+      const { data: _data, error } = await supabase.from("users").select("count").limit(1)
       if (error) {
         if (error.message.includes('relation "public.users" does not exist')) {
           addResult({

@@ -42,7 +42,6 @@ export default function GanttChart({
   onDeleteTask,
   onCreateTask,
   onDayClick,
-  userRole,
 }: GanttChartProps) {
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)

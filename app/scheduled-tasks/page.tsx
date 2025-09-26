@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { supabase } from "@/lib/supabase"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, User } from "@/lib/auth"
 import { useRouter } from "next/navigation"
 import Header from "@/components/layout/header"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -34,8 +34,14 @@ interface Consultant {
   username: string
 }
 
+type TaskWithConsultant = Task & {
+    consultants: {
+        name: string;
+    } | null;
+};
+
 export default function ScheduledTasksPage() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [tasks, setTasks] = useState<Task[]>([])
   const [consultants, setConsultants] = useState<Consultant[]>([])
   const [loading, setLoading] = useState(true)
@@ -46,25 +52,22 @@ export default function ScheduledTasksPage() {
   const [currentTaskDescription, setCurrentTaskDescription] = useState("")
   const router = useRouter()
 
-  useEffect(() => {
-    const currentUser = getCurrentUser()
-    if (!currentUser) {
-      router.push("/login")
-      return
-    }
-    setUser(currentUser)
-  }, [router])
+  const loadConsultants = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("id, name, username")
+        .eq("role", "consultor")
+        .order("name")
 
-  useEffect(() => {
-    if (user) {
-      loadTasks()
-      if (user.role === "admin") {
-        loadConsultants()
-      }
+      if (error) throw error
+      setConsultants(data || [])
+    } catch (error) {
+      console.error("Erro ao carregar consultores:", error)
     }
-  }, [user, filterConsultant])
+  }, []);
 
-  const loadTasks = async () => {
+  const loadTasks = useCallback(async () => {
     if (!user) return
 
     setLoading(true)
@@ -85,7 +88,7 @@ export default function ScheduledTasksPage() {
 
       if (error) throw error
 
-      const tasksWithConsultantName: Task[] = data.map((task: any) => ({
+      const tasksWithConsultantName: Task[] = data.map((task: TaskWithConsultant) => ({
         ...task,
         consultant_name: task.consultants?.name || "Desconhecido",
       }))
@@ -96,22 +99,25 @@ export default function ScheduledTasksPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user, filterConsultant]);
 
-  const loadConsultants = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("users")
-        .select("id, name, username")
-        .eq("role", "consultor")
-        .order("name")
-
-      if (error) throw error
-      setConsultants(data || [])
-    } catch (error) {
-      console.error("Erro ao carregar consultores:", error)
+  useEffect(() => {
+    const currentUser = getCurrentUser()
+    if (!currentUser) {
+      router.push("/login")
+      return
     }
-  }
+    setUser(currentUser)
+  }, [router])
+
+  useEffect(() => {
+    if (user) {
+      loadTasks()
+      if (user.role === "admin") {
+        loadConsultants()
+      }
+    }
+  }, [user, filterConsultant, loadTasks, loadConsultants])
 
   const getFormattedTimeSlot = (slot: Task["time_slot"]) => {
     switch (slot) {

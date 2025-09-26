@@ -36,7 +36,7 @@ interface CreateTaskFormProps {
   currentUserId: string
 }
 
-export default function CreateTaskForm({ isOpen, onClose, onSubmit, userRole, currentUserId }: CreateTaskFormProps) {
+export default function CreateTaskForm({ isOpen, onClose, onSubmit, currentUserId }: CreateTaskFormProps) {
   const [formData, setFormData] = useState({
     title: "",
     client_name: "",
