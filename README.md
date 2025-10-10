@@ -30,6 +30,41 @@ O Agenda App é uma aplicação web que permite aos usuários gerenciar tarefas 
 *   **Tema Escuro e Claro:** Suporte para alternância entre temas claro e escuro para melhor experiência do usuário.
 *   **Design Responsivo:** A interface se adapta a diferentes tamanhos de tela, de desktops a dispositivos móveis.
 
+## Modelo de Dados
+
+O banco de dados é composto por duas tabelas principais: `users` e `tasks`.
+
+### Tabela `users`
+
+Armazena as informações dos usuários da aplicação.
+
+| Coluna          | Tipo        | Descrição                               |
+| --------------- | ----------- | ----------------------------------------- |
+| `id`            | `UUID`      | Identificador único do usuário (PK)       |
+| `username`      | `TEXT`      | Nome de usuário (único)                   |
+| `password_hash` | `TEXT`      | Hash da senha do usuário                  |
+| `name`          | `TEXT`      | Nome completo do usuário                  |
+| `role`          | `TEXT`      | Papel do usuário (`admin` ou `consultor`) |
+| `created_at`    | `TIMESTAMP` | Data de criação do registro               |
+| `updated_at`    | `TIMESTAMP` | Data da última atualização do registro    |
+
+### Tabela `tasks`
+
+Armazena as tarefas agendadas pelos usuários.
+
+| Coluna          | Tipo        | Descrição                                                          |
+| --------------- | ----------- | ------------------------------------------------------------------ |
+| `id`            | `UUID`      | Identificador único da tarefa (PK)                                 |
+| `title`         | `TEXT`      | Título da tarefa                                                   |
+| `description`   | `TEXT`      | Descrição detalhada da tarefa                                      |
+| `client_name`   | `TEXT`      | Nome do cliente associado à tarefa                                 |
+| `consultant_id` | `UUID`      | ID do consultor responsável pela tarefa (FK para `users.id`)       |
+| `start_date`    | `TIMESTAMP` | Data e hora de início da tarefa                                    |
+| `end_date`      | `TIMESTAMP` | Data e hora de término da tarefa                                   |
+| `time_slot`     | `TEXT`      | Período do dia (`manha`, `tarde`, `integral`)                      |
+| `created_at`    | `TIMESTAMP` | Data de criação do registro                                        |
+| `updated_at`    | `TIMESTAMP` | Data da última atualização do registro                             |
+
 ## Começando
 
 Siga as instruções abaixo para configurar e executar o projeto em seu ambiente local.
@@ -37,7 +72,7 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
 ### Pré-requisitos
 
 *   [Node.js](https://nodejs.org/en/) (versão 18 ou superior)
-*   [pnpm](https://pnpm.io/installation) (opcional, mas recomendado)
+*   [npm](https://www.npmjs.com/)
 
 ### Instalação
 
@@ -51,11 +86,7 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
 2.  **Instale as dependências:**
 
     ```bash
-    pnpm install
-    # ou
-    # npm install
-    # ou
-    # yarn install
+    npm install
     ```
 
 3.  **Configure as variáveis de ambiente:**
@@ -74,11 +105,7 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
 Para iniciar o servidor de desenvolvimento, execute:
 
 ```bash
-pnpm dev
-# ou
-# npm run dev
-# ou
-# yarn dev
+npm run dev
 ```
 
 Abra [http://localhost:3000](http://localhost:3000) em seu navegador para ver a aplicação.
@@ -114,12 +141,19 @@ Abra [http://localhost:3000](http://localhost:3000) em seu navegador para ver a 
 
 A pasta `scripts/` contém scripts SQL para criar e popular o banco de dados no Supabase:
 
-*   `01-create-tables.sql`: Cria as tabelas necessárias para a aplicação.
+*   `01-create-tables.sql`: Cria as tabelas `users` e `tasks`, juntamente com seus índices.
 *   `02-seed-data.sql`: Popula o banco de dados com dados de exemplo para teste.
-*   ... e outros scripts para manutenção e evolução do esquema do banco de dados.
+*   `03-add-new-task-fields.sql`: Script de migração para adicionar novos campos à tabela `tasks`.
+*   `04-remove-consultant-system.sql`: Script de migração para remover o sistema de consultores.
+*   `check-users.js`: Script para verificar os usuários no banco de dados.
+*   `clear-users-and-fix-rls.sql`: Limpa os usuários e corrige as políticas de RLS.
+*   `disable-rls-and-add-users.sql`: Desabilita RLS e adiciona usuários.
+*   `fix-rls-policies.sql`: Corrige as políticas de RLS.
 
-## Implantação
+## Contribuição
 
-A maneira mais fácil de implantar sua aplicação Next.js é usar a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) dos criadores do Next.js.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-Confira a documentação de [implantação do Next.js](https://nextjs.org/docs/deployment) para mais detalhes.
+## Licença
+
+Este projeto está licenciado sob a licença MIT.
